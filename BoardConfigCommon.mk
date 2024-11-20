@@ -7,7 +7,7 @@
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 
-COMMON_PATH := device/oneplus/sm8650-common
+COMMON_PATH := device/nubia/sm8650-common
 
 # A/B
 AB_OTA_UPDATER := true
@@ -26,7 +26,6 @@ AB_OTA_PARTITIONS += \
     vbmeta_system \
     vbmeta_vendor \
     vendor \
-    vendor_boot \
     vendor_dlkm
 
 # ANT+
@@ -70,7 +69,7 @@ BOARD_KERNEL_SEPARATED_DTBO := true
 #TARGET_NEEDS_DTBOIMAGE := true
 
 # Camera
-TARGET_CAMERA_PACKAGE_NAME := com.oplus.packageName
+#TARGET_CAMERA_PACKAGE_NAME := com.oplus.packageName
 
 # Properties
 TARGET_ODM_PROP += $(COMMON_PATH)/odm.prop
@@ -81,9 +80,6 @@ TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor.prop
 
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(COMMON_PATH)/config.fs
-
-# Fingerprint
-TARGET_SURFACEFLINGER_UDFPS_LIB := //hardware/oplus:libudfps_extension.oplus
 
 # HIDL
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
@@ -124,12 +120,45 @@ BOARD_KERNEL_IMAGE_NAME := Image
 KERNEL_LTO := none
 
 TARGET_FORCE_PREBUILT_KERNEL := true
-TARGET_KERNEL_SOURCE := kernel/oneplus/sm8650
+TARGET_KERNEL_SOURCE := kernel/nubia/sm8650
 TARGET_KERNEL_CONFIG := \
     gki_defconfig \
 #    vendor/pineapple_GKI.config \
 #    vendor/oplus/pineapple_GKI.config \
 #    vendor/debugfs.config
+
+TARGET_KERNEL_EXT_MODULE_ROOT := kernel/oneplus/sm8650-modules
+TARGET_KERNEL_EXT_MODULES := \
+    qcom/opensource/mmrm-driver \
+    qcom/opensource/mm-drivers/hw_fence \
+    qcom/opensource/mm-drivers/msm_ext_display \
+    qcom/opensource/mm-drivers/sync_fence \
+    qcom/opensource/securemsm-kernel \
+    qcom/opensource/audio-kernel \
+    qcom/opensource/camera-kernel \
+    qcom/opensource/dataipa/drivers/platform/msm \
+    qcom/opensource/datarmnet-ext/mem \
+    qcom/opensource/datarmnet/core \
+    qcom/opensource/datarmnet-ext/aps \
+    qcom/opensource/datarmnet-ext/offload \
+    qcom/opensource/datarmnet-ext/shs \
+    qcom/opensource/datarmnet-ext/perf \
+    qcom/opensource/datarmnet-ext/perf_tether \
+    qcom/opensource/datarmnet-ext/sch \
+    qcom/opensource/datarmnet-ext/wlan \
+    qcom/opensource/display-drivers/msm \
+    qcom/opensource/synx-kernel \
+    qcom/opensource/dsp-kernel \
+    qcom/opensource/eva-kernel \
+    qcom/opensource/video-driver \
+    qcom/opensource/graphics-kernel \
+    qcom/opensource/wlan/platform \
+    qcom/opensource/wlan/qcacld-3.0 \
+    qcom/opensource/bt-kernel \
+    qcom/opensource/spu-kernel \
+    qcom/opensource/mm-sys-kernel/ubwcp \
+    qcom/opensource/touch-drivers \
+    nxp/opensource/driver
 
 # Kernel modules
 #BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/modules.load.system_dlkm))
@@ -187,28 +216,28 @@ TARGET_BOARD_PLATFORM := pineapple
 # Metadata
 BOARD_USES_METADATA_PARTITION := true
 
-# Partitions
-BOARD_EROFS_COMPRESSOR := lz4
-BOARD_EROFS_PCLUSTER_SIZE := 262144
-BOARD_PRODUCTIMAGE_MINIMAL_PARTITION_RESERVED_SIZE := false
-BOARD_BOOTIMAGE_PARTITION_SIZE := 201326592
+# Partition layout
+BOARD_BOOTIMG_PARTITION_SIZE := 100663296
 BOARD_DTBOIMG_PARTITION_SIZE := 25165824
 BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 233523179520
-BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 201326592
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 104857600
-BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := erofs
-BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := erofs
-BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := erofs
-BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := erofs
-BOARD_SYSTEM_DLKMIMAGE_FILE_SYSTEM_TYPE := erofs
-BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := erofs
-BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := erofs
-BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := odm product system system_dlkm system_ext vendor vendor_dlkm
-BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 17175674880
+BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 100663296
+
+BOARD_SUPER_PARTITION_SIZE := 12884901888
 BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
-BOARD_SUPER_PARTITION_SIZE := 17179869184
-BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
+BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := odm product system system_dlkm system_ext vendor vendor_dlkm
+BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 10733223936
+
+BOARD_FLASH_BLOCK_SIZE := 262144
+
+BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_SYSTEM_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
+
 TARGET_COPY_OUT_ODM := odm
 TARGET_COPY_OUT_PRODUCT := product
 TARGET_COPY_OUT_SYSTEM_DLKM := system_dlkm
@@ -296,4 +325,4 @@ WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 # Include the proprietary files BoardConfig.
-include vendor/oneplus/sm8650-common/BoardConfigVendor.mk
+#include vendor/oneplus/sm8650-common/BoardConfigVendor.mk
