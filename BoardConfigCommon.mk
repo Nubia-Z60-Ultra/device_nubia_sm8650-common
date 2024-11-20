@@ -91,7 +91,7 @@ android.hardware.biometrics.fingerprint-V3-ndk
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
     $(COMMON_PATH)/device_framework_matrix.xml \
     hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml \
-    vendor/lineage/config/device_framework_matrix.xml
+    vendor/yaap/config/device_framework_matrix.xml
 DEVICE_FRAMEWORK_MANIFEST_FILE += $(COMMON_PATH)/framework_manifest.xml
 DEVICE_MATRIX_FILE := hardware/qcom-caf/common/compatibility_matrix.xml
 DEVICE_MANIFEST_FILE := \
@@ -126,7 +126,7 @@ BOARD_KERNEL_IMAGE_NAME := Image
 KERNEL_LTO := none
 
 TARGET_FORCE_PREBUILT_KERNEL := true
-TARGET_KERNEL_SOURCE := kernel/oneplus/sm8650
+TARGET_KERNEL_SOURCE := kernel/nubia/sm8650
 TARGET_KERNEL_CONFIG := \
     gki_defconfig \
 #    vendor/pineapple_GKI.config \
